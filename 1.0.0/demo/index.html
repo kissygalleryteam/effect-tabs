@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>EffectTabs的demo</title>
+    <script src="//g.alicdn.com/kissy/k/1.4.8/seed-min.js" charset="utf-8"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            font-size: 12px;
+        }
+        .effectTabs{
+            padding: 20px;
+            width: 500px;
+        }
+        .effectTabs .effectTabs__head{
+            overflow: hidden;
+        }
+        .effectTabs .effectTabs__tab{
+            float: left;
+            padding: 5px;
+            border: 1px solid #eee;
+            cursor: pointer;
+        }
+        .effectTabs .effectTabs__tab_state_active{
+            background: #eee;
+            color: #f00;
+        }
+        .effectTabs .effectTabs__item{
+            display: none;
+            padding: 20px;
+            border: 1px solid #eee;
+            margin-top: -1px;
+        }
+        .effectTabs .effectTabs__item_state_active{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="effectTabs" id="tabs_1" data-name="Tabs_Group_name">
+    <ul class="effectTabs__head">
+        <li class="effectTabs__tab" data-target="Tab_1_name">Tab 1 name</li>
+        <li class="effectTabs__tab" data-target="Tab_2_name">Tab 2 name</li>
+        <li class="effectTabs__tab" data-target="Tab_3_name">Tab 3 name</li>
+    </ul>
+    <div class="effectTabs__body">
+        <div class="effectTabs__item" data-name="Tab_1_name">
+            Tab 1 content(3秒后将切换到Tab 3 content)
+        </div>
+        <div class="effectTabs__item" data-name="Tab_2_name">
+            Tab 2 content
+        </div>
+        <div class="effectTabs__item" data-name="Tab_3_name">
+            Tab 3 content
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var S = KISSY;
+    if (S.Config.debug) {
+        var debugPath = "http://localhost:5555/";
+        S.config({
+            packages:[
+                {
+                    name:"kg/effect-tabs/1.0.0",
+                    path:debugPath,
+                    charset:"utf-8",
+                    ignorePackageNameInUri: true
+                }
+            ]
+        });
+    }
+
+    S.use('kg/effect-tabs/1.0.0/index', function (S, EffectTabs) {
+        var tabs = new EffectTabs('#tabs_1',{
+            type: "hash",
+            onChange: function(){
+                console.log('this is callback')
+            }
+        });
+        tabs.init();
+        setTimeout(function(){
+            tabs.setTab("Tab_3_name");
+        },3000);
+    })
+</script>
+</body>
+</html>
+
