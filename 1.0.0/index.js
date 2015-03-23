@@ -91,9 +91,11 @@ EffectTabs.prototype = {
         var $container = this.container,
             $tabs = $container.all(".effectTabs__tab"),
             $items = $container.all(".effectTabs__item"),
+            $placeholder = $container.all(".effectTabs__placeholder"),
             $this,
 
             name = $container.attr("data-name"),
+            currentTarget,
             id;
 
         $tabs.each(function () {
@@ -108,12 +110,18 @@ EffectTabs.prototype = {
             $this.prop("id", id);
         });
 
-
         $tabs.on("click", function(e){
             e.preventDefault();
             setTab($(this).attr("data-target"));
         });
 
+        $tabs.on("mouseenter", function(e){
+            setHolder($(this).attr("data-target"));
+        });
+
+        $tabs.on("mouseleave", function(e){
+            currentTarget && setHolder(currentTarget);
+        });
 
         var setTab = function (target) {
             target = decodeURIComponent(target);
@@ -124,6 +132,9 @@ EffectTabs.prototype = {
             $(id).addClass("effectTabs__item_state_active").siblings().removeClass("effectTabs__item_state_active");
 
             setUrl(target);
+            setHolder(target);
+
+            currentTarget = target;
 
             if (typeof settings.onChange === "function") {
                 settings.onChange({
@@ -151,6 +162,20 @@ EffectTabs.prototype = {
             if (settings.type === "storage") {
                 storage.save(location.hostname + "__effectTabsPosition", urlString);
             }
+        };
+
+        var setHolder = function (target) {
+            var width = left = 0;
+            $tabs.each(function(item,i){
+                if (item.attr('data-target') == target) {
+                    width = item.outerWidth();
+                    left = item.offset().left - $container.offset().left
+                };
+            });
+            $placeholder.css({
+                width: width,
+                left: left
+            });
         };
 
         getUrl();

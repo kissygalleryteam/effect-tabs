@@ -12,7 +12,8 @@
             font-size: 12px;
         }
         .effectTabs{
-            padding: 20px;
+            position: relative;
+            margin: 20px;
             width: 500px;
         }
         .effectTabs .effectTabs__head{
@@ -20,9 +21,13 @@
         }
         .effectTabs .effectTabs__tab{
             float: left;
-            padding: 5px;
+            padding: 10px;
             border: 1px solid #eee;
             cursor: pointer;
+        }
+        .effectTabs .effectTabs__tab:hover{
+            background: #ccc;
+            border-color: #ccc;
         }
         .effectTabs .effectTabs__tab_state_active{
             background: #eee;
@@ -37,19 +42,36 @@
         .effectTabs .effectTabs__item_state_active{
             display: block;
         }
+        .effectTabs .effectTabs__follow{
+            position: absolute;
+            top: 32px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ccc;
+        }
+        .effectTabs .effectTabs__placeholder{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: #f00;
+            transition: all .5s;
+        }
     </style>
 </head>
 <body>
 
 <div class="effectTabs" id="tabs_1" data-name="Tabs_Group_name">
+    <div class="effectTabs__follow"><div class="effectTabs__placeholder"></div></div>
     <ul class="effectTabs__head">
         <li class="effectTabs__tab" data-target="Tab_1_name">Tab 1 name</li>
         <li class="effectTabs__tab" data-target="Tab_2_name">Tab 2 name</li>
-        <li class="effectTabs__tab" data-target="Tab_3_name">Tab 3 name</li>
+        <li class="effectTabs__tab" data-target="Tab_3_name">Tab 3 name for long</li>
     </ul>
     <div class="effectTabs__body">
         <div class="effectTabs__item" data-name="Tab_1_name">
-            Tab 1 content(3秒后将切换到Tab 3 content)
+            Tab 1 content(初次加载3秒后将切换到Tab 3 content)
         </div>
         <div class="effectTabs__item" data-name="Tab_2_name">
             Tab 2 content
